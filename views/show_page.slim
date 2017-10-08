@@ -1,0 +1,10 @@
+h1= @page.title
+
+p= @page.content
+
+p <a href="/pages">back to pages index</a>
+p <a href="/pages/#{@page.id}/edit">edit this page</a>
+
+form action="/pages/#{@page.id}" method="post"
+  input type="hidden" name="_method" value="delete"
+  input type="submit" value="Delete this page"

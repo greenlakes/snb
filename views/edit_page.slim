@@ -1,0 +1,4 @@
+h1 Edit Page
+form action="/pages/#{@page.id}" method="post"
+  input type="hidden" name="_method"value="put"
+  ==slim :page_form

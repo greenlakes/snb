@@ -1,0 +1,9 @@
+label for="title" Title:
+input#title type="text" name="page[title]" value="#{@page.title}"
+br
+br
+label for="content" Content:
+textarea#content name="page[content]" == @page.content
+br
+br
+input type="submit" value="Save Page"
