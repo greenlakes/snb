@@ -8,3 +8,6 @@
  form action="/pages/#{@page.id}" method="POST"
   input type="hidden" name="_method" value="DELETE"
   input type="submit" value="delete this page"
+  
+ h5 Number of characters in the wiki page title: #{ @page.title.length}. 
+ h5 Number of words in the wiki page (excl. title): #{ @page.content.length}. 

@@ -1,5 +1,5 @@
 h1
-  |  Welcome to Admin ! 
+  |  Welcome to My Admin ! 
 - unless @users.empty?
 
   h3 List of users
@@ -7,7 +7,7 @@ h1
   ul#pages
     - @users.each do |user|
       li
-        | <a href="/user/
+        | <a href="/users/
         = user.id
         | ">
         = user.username

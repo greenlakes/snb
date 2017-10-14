@@ -4,6 +4,12 @@ nav
     li <a href="/about" title="About">About</a>
     li <a href="/contact" title="Contact">Contact</a>
     li <a href="/pages" title="Pages">Pages</a>
+  -unless current_user
+    li <a href="/login" title="Login">Login</a> 
+    
+    
+-if current_admin 
+    li <a href="/admin" title="My Admin">My Admin</a>
 -if current_user
   p Hello, #{current_user.username.capitalize}
   form action="/logout" method="post"

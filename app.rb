@@ -66,11 +66,7 @@ class App < Sinatra::Base
 
 get '/users/:id' do
  @user = User.get(params[:id])
- if current_user
  slim :user_profile
-else
- redirect '/login'
-end
 end
 
 
@@ -119,16 +115,17 @@ end
   
  get '/pages' do
   @pages = Page.all
-  if current_user
       slim :pages
-  else
-      redirect '/login'
-  end
  end
 
  get '/pages/new' do
   @page = Page.new
+  if current_user
   slim :new_page
+ else
+  flash[:warning]= "You need to log in to be able to create a page."
+  redirect '/login'
+ end
  end
 
  get '/pages/:id' do
@@ -138,27 +135,41 @@ end
 
  post '/pages' do
   if page = Page.create(params[:page])
-  flash[:success] = "Page successfully created"
+   page.created_at = Time.now
+  page.created_by = current_user.username
+  info = "#{params[:page]}"
+  time = Time.now.strftime('%Y/%m/%d %H:%M %p')
+  @info = time + " " + info + " Created by: " + page.created_by
+  file = File.new("logs/#{page.title + page.created_at.to_s}.txt", "w")
+  file.puts @info
+  file.close
+  
+  flash[:success] = "Page successfully created."
   redirect to("/pages/#{page.id}")
   end
 end
 
  get '/pages/:id/edit' do
   @page = Page.get(params[:id])
+  if current_user
   slim :edit_page
+ else 
+  flash[:warning]= "You need to log in to be able to edit the page."
+  redirect '/login'
  end
+end
  
-
 put '/pages/:id' do
   page = Page.get(params[:id])
   if page.update(params[:page])
+  page.updated_at = Time.now
+  page.updated_by = current_user.username
   info = "#{params[:page]}"
   time = Time.now.strftime('%Y/%m/%d %H:%M %p')
-  @info = time + " " + info
-  file = File.new("logs/#{page.title}" + time + ".txt", "w")
+  @info = time + " " + info + " Edit made by: " + page.updated_by
+  file = File.new("logs/#{page.title + page.updated_at.to_s}.txt", "w")
   file.puts @info
   file.close
-  
   
   flash[:notice] = "Page successfully updated."
   redirect to("/pages/#{page.id}")
@@ -167,10 +178,13 @@ end
  
 
  delete '/pages/:id' do
-  if Page.get(params[:id]).destroy
+  if current_user && Page.get(params[:id]).destroy
   flash[:notice] = "Page successfully deleted"
   redirect to('/pages')
-  end
+ else
+  flash[:warning]= "You need to be logged in to delete this page."
+  redirect '/login'
+end
 end
 
 

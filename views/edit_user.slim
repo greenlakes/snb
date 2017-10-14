@@ -1,4 +1,7 @@
-h1 Edit User
+h1 Edit profile: #{@user.username}
 form action="/users/#{@user.id}" method="post"
   input type="hidden" name="_method"value="put"
   ==slim :user_form
+  <br>
+  <br>
+  <a href="/users/#{@user.id}">Go back to user profile</>
