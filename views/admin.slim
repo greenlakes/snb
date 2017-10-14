@@ -1,0 +1,33 @@
+h1
+  |  Welcome to Admin ! 
+- unless @users.empty?
+
+  h3 List of users
+  
+  ul#pages
+    - @users.each do |user|
+      li
+        | <a href="/user/
+        = user.id
+        | ">
+        = user.username
+- else
+  p
+    |  No users have been created yet! 
+
+a[href="/pages/new"]
+  |  Create a new page 
+  
+- unless @pages.empty?
+  h3 List of pages
+  ul#pages
+    - @pages.each do |page|
+      li
+        | <a href="/pages/
+        = page.id
+        | ">
+        = page.title
+- else
+  p
+    |  No pages have been created yet! 
+    

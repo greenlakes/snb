@@ -1,8 +1,15 @@
-h1 Pages
-a href="/pages/new" Create a new page
-- if @pages.any?
+h1
+  |  Pages 
+a[href="/pages/new"]
+  |  Create a new page 
+- unless @pages.empty?
   ul#pages
-    -@pages.each do |page|
-      li <a href="/pages/#{page.id}">#{page.title}</a>
+    - @pages.each do |page|
+      li
+        | <a href="/pages/
+        = page.id
+        | ">
+        = page.title
 - else
-  p No pages have been created yet!
+  p
+    |  No pages have been created yet! 

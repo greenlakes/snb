@@ -3,4 +3,8 @@ nav
     li <a href="/" title="Home">Home</a>
     li <a href="/about" title="About">About</a>
     li <a href="/contact" title="Contact">Contact</a>
-    li <a href="/pages" title="Songs">Pages</a>
+    li <a href="/pages" title="Pages">Pages</a>
+-if current_user
+  p Hello, #{current_user.username.capitalize}
+  form action="/logout" method="post"
+    input type="submit" value="Logout"

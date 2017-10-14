@@ -1,0 +1,10 @@
+h1 User profile
+p Welcome to your user account!
+p What are you up to?
+
+p <a href="/users/#{@user.id}/edit">Edit my user details</a>
+
+    
+form action="/users/#{current_user.id}" method="POST"
+  input type="hidden" name="_method" value="DELETE"
+  input type="submit" value="Delete your account"
